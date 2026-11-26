@@ -1,0 +1,20 @@
+# Netlify configuration for peiyillc.com
+# www <-> apex redirects are handled by Netlify's "Primary domain" setting
+# (Domain management). Do NOT add a www redirect rule here: it can create a
+# redirect loop if the primary domain is changed later.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Force HTTPS-only browsing once the certificate is live (safe: Netlify also redirects http -> https)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
