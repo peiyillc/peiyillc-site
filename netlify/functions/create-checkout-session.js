@@ -37,29 +37,6 @@ exports.handler = async (event) => {
   p.append("cancel_url", `${site}/book.html?canceled=1`);
   p.append("billing_address_collection", "auto");
 
-  // Booking details collected on the Stripe page (max 3 custom fields)
-  p.append("custom_fields[0][key]", "preferredtimes");
-  p.append("custom_fields[0][type]", "text");
-  p.append("custom_fields[0][label][type]", "custom");
-  p.append("custom_fields[0][label][custom]", "Preferred dates & times (incl. time zone)");
-
-  p.append("custom_fields[1][key]", "focus");
-  p.append("custom_fields[1][type]", "dropdown");
-  p.append("custom_fields[1][label][type]", "custom");
-  p.append("custom_fields[1][label][custom]", "Main focus for your session");
-  p.append("custom_fields[1][dropdown][options][0][label]", "Bean selection");
-  p.append("custom_fields[1][dropdown][options][0][value]", "beans");
-  p.append("custom_fields[1][dropdown][options][1][label]", "Brewing technique");
-  p.append("custom_fields[1][dropdown][options][1][value]", "brewing");
-  p.append("custom_fields[1][dropdown][options][2][label]", "Both");
-  p.append("custom_fields[1][dropdown][options][2][value]", "both");
-
-  p.append("custom_fields[2][key]", "equipment");
-  p.append("custom_fields[2][type]", "text");
-  p.append("custom_fields[2][optional]", "true");
-  p.append("custom_fields[2][label][type]", "custom");
-  p.append("custom_fields[2][label][custom]", "Your brewing equipment");
-
   p.append(
     "custom_text[submit][message]",
     "We'll email you from info@peiyillc.com within 1 business day to confirm your session time. By paying you agree to our Terms & Refund Policy at peiyillc.com/terms.html."
