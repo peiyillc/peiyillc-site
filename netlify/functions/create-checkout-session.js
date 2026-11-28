@@ -1,4 +1,4 @@
-// Netlify Function: creates a Stripe Checkout Session for the $98.80 consultation.
+// Netlify Function: creates a Stripe Checkout Session for the $98.80/week subscription.
 // Required environment variable (Netlify > Site configuration > Environment variables):
 //   STRIPE_SECRET_KEY   sk_live_... (or sk_test_... while testing)
 // Optional:
@@ -22,13 +22,15 @@ exports.handler = async (event) => {
   const site = (process.env.SITE_URL || "https://peiyillc.com").replace(/\/$/, "");
 
   const p = new URLSearchParams();
-  p.append("mode", "payment");
+  p.append("mode", "subscription");
+  p.append("allow_promotion_codes", "true"); // customers can enter a coupon code at checkout
   p.append("locale", "en"); // keep checkout English-only
   if (process.env.STRIPE_PRICE_ID) {
     p.append("line_items[0][price]", process.env.STRIPE_PRICE_ID);
   } else {
     p.append("line_items[0][price_data][currency]", "usd");
     p.append("line_items[0][price_data][unit_amount]", AMOUNT_CENTS);
+    p.append("line_items[0][price_data][recurring][interval]", "week");
     p.append("line_items[0][price_data][product_data][name]", PRODUCT_NAME);
     p.append("line_items[0][price_data][product_data][description]", PRODUCT_DESC);
   }
